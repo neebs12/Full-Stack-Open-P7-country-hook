@@ -18,7 +18,22 @@ const useField = (type) => {
 const useCountry = (name) => {
   const [country, setCountry] = useState(null)
 
-  useEffect(() => {})
+  useEffect(() => {
+    // this is where country is fetched
+    const url = `https://restcountries.com/v3.1/name/${name}`
+    axios.get(url)
+    .then(response => {
+      const responseCountry = response.data[0]
+      setCountry(responseCountry)
+    })
+    .catch(reason => {
+      // setCountry(null)
+      console.error(url, reason)
+    })
+
+  }, [name]) 
+  // <--- dependency array will have [name]
+  // <--- so that is triggered everytime name is changed
 
   return country
 }
